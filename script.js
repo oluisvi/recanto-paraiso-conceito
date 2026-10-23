@@ -1,12 +1,59 @@
 (() => {
   const designs = [...document.querySelectorAll('.design-view')];
   const switchButtons = [...document.querySelectorAll('.concept-button')];
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const revealTargets = [
+    '.trail-meta > *', '.trail-section', '.ride-row', '.trail-note > *',
+    '.location-panel > *', '.trail-booking > *', '.site-footer > *',
+    '.field-opening > *', '.field-offer', '.field-vivencia', '.field-info > *',
+    '.field-territory > *', '.field-contact-section > *', '.field-map-panel > *', '.field-footer > *',
+    '.portal-hero-copy', '.portal-hero-image', '.portal-choices-intro', '.portal-offer',
+    '.portal-plan > *', '.portal-local > *', '.portal-contact > *', '.portal-map-panel > *', '.portal-footer > *'
+  ].join(',');
+  const revealObserver = 'IntersectionObserver' in window && !reduceMotion.matches
+    ? new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-revealed');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' })
+    : null;
+
+  function prepareMotion(view) {
+    const targets = [...view.querySelectorAll(revealTargets)];
+    targets.forEach((element, index) => {
+      if (!element.hasAttribute('data-motion')) {
+        element.setAttribute('data-motion', 'reveal');
+        element.style.setProperty('--reveal-order', String(index % 6));
+      }
+      if (element.classList.contains('is-revealed')) return;
+      if (!revealObserver) element.classList.add('is-revealed');
+      else revealObserver.observe(element);
+    });
+  }
 
   function showDesign(name, focus = false) {
+    const current = designs.find((view) => !view.hidden);
+    if (current?.dataset.view === name) {
+      if (!current.classList.contains('is-entering')) {
+        current.classList.add('is-entering');
+        window.setTimeout(() => current.classList.remove('is-entering'), reduceMotion.matches ? 20 : 900);
+      }
+      prepareMotion(current);
+      if (focus) switchButtons.find((button) => button.dataset.design === name)?.focus();
+      return;
+    }
     designs.forEach((view) => {
       const active = view.dataset.view === name;
       view.hidden = !active;
       view.classList.toggle('is-visible', active);
+      view.classList.remove('is-entering');
+      if (active) {
+        view.classList.add('is-entering');
+        window.setTimeout(() => view.classList.remove('is-entering'), reduceMotion.matches ? 20 : 900);
+        prepareMotion(view);
+      }
     });
     switchButtons.forEach((button) => {
       const active = button.dataset.design === name;
@@ -30,6 +77,14 @@
 
   const initial = location.hash.slice(1);
   if (['trilha', 'caderno', 'portal'].includes(initial)) showDesign(initial);
+  else {
+    const activeDesign = designs.find((view) => !view.hidden);
+    if (activeDesign) {
+      activeDesign.classList.add('is-entering');
+      window.setTimeout(() => activeDesign.classList.remove('is-entering'), reduceMotion.matches ? 20 : 900);
+      prepareMotion(activeDesign);
+    }
+  }
 
   document.querySelectorAll('[data-interest]').forEach((control) => {
     control.addEventListener('click', (event) => {

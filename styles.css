@@ -26,3 +26,31 @@
 .location-panel{display:grid;grid-template-columns:minmax(240px,.8fr) minmax(0,1.2fr);gap:clamp(1.5rem,5vw,5rem);align-items:center;padding:clamp(3.5rem,7vw,6.5rem) clamp(1.2rem,8vw,8rem)}.location-copy .eyebrow{margin:0 0 .9rem;color:var(--pink)}.location-copy h2{margin:0;font:400 clamp(2.3rem,4.5vw,4.2rem)/.98 var(--serif);letter-spacing:-.04em}.location-copy>p:not(.eyebrow){margin:.9rem 0 1.1rem;line-height:1.6}.map-link{display:inline-flex;align-self:flex-start;align-items:center;gap:.65rem;padding:.72rem .9rem;border:1px solid currentColor;border-radius:3px;font-size:.82rem;font-weight:700}.map-link:hover{background:#d5e7a5;color:#173321;border-color:#d5e7a5}.location-copy small{display:block;max-width:360px;margin-top:.75rem;font-size:.7rem;line-height:1.45;opacity:.78}.location-map{display:block;width:100%;height:auto;min-height:300px;aspect-ratio:16/10;border:0;background:#dfe5d7;box-shadow:0 20px 50px rgba(10,31,18,.16)}.trail-location{background:#183b28;color:#f7f5ed}.trail-location .location-copy .eyebrow{color:#d5e9a5}.field-map-panel{grid-template-columns:minmax(250px,.72fr) minmax(0,1.28fr);background:#f0ece1;color:#292a22;border-top:1px solid #b5b0a4;border-bottom:1px solid #b5b0a4}.field-map-panel .location-copy .eyebrow{color:var(--terra)}.field-map-panel .location-map{box-shadow:none;border:1px solid #c7c1b4}.portal-map-panel{background:#dbe5c9;color:#1c2c20}.portal-map-panel .location-copy .eyebrow{color:var(--terra)}.portal-map-panel .location-map{border:6px solid #fffdf7;box-shadow:0 20px 50px rgba(10,31,18,.12)}
 @media(max-width:850px){.location-panel{grid-template-columns:minmax(220px,.8fr) minmax(0,1.2fr);gap:1.6rem;padding:3.5rem 1.5rem}.location-map{height:auto;min-height:280px;aspect-ratio:16/10}}
 @media(max-width:600px){.location-panel{grid-template-columns:1fr;gap:1.4rem;padding:3.3rem 1.2rem}.location-copy h2{font-size:2.7rem}.location-map{height:auto;min-height:0;aspect-ratio:4/3}.map-link{min-height:46px}.portal-header nav a:nth-child(4){display:none}}
+
+/* Motion system: light, progressive and shared by the three concepts. */
+[data-motion="reveal"]{opacity:0;transform:translate3d(0,1.35rem,0) scale(.99);transition:opacity .72s cubic-bezier(.2,.72,.22,1),transform .72s cubic-bezier(.2,.72,.22,1);transition-delay:calc(var(--reveal-order,0)*55ms)}
+[data-motion="reveal"].is-revealed{opacity:1;transform:none}
+.experience.is-entering{animation:concept-enter .78s cubic-bezier(.2,.72,.22,1) both}
+.experience.is-entering .trail-copy,.experience.is-entering .trail-art,.experience.is-entering .field-opening>*,.experience.is-entering .field-title,.experience.is-entering .field-photo,.experience.is-entering .portal-hero-copy,.experience.is-entering .portal-hero-image{animation:hero-rise .85s cubic-bezier(.2,.72,.22,1) both}
+.experience.is-entering .trail-art,.experience.is-entering .field-photo,.experience.is-entering .portal-hero-image{animation-delay:.12s}
+.concept-button,.button,.ride-select,.field-link,.portal-offer-cta,.map-link,.nav-cta{transition:background-color .24s ease,color .24s ease,border-color .24s ease,transform .24s cubic-bezier(.2,.72,.22,1),box-shadow .24s ease}
+.concept-button.is-active{box-shadow:0 0 0 3px #d1f46626,0 5px 18px #0002}
+.concept-button:active,.button:active,.ride-select:active,.portal-offer-cta:active{transform:scale(.97)}
+.text-link span,.button span,.portal-offer-cta span{display:inline-block;transition:transform .24s cubic-bezier(.2,.72,.22,1)}
+.text-link:hover span,.button:hover span,.portal-offer-cta:hover span{transform:translateX(4px)}
+.ride-row>img,.field-offer img,.trail-note>img,.portal-plan-visual img,.portal-hero-image img{transition:transform .65s cubic-bezier(.2,.72,.22,1)}
+.ride-row>img:hover,.field-offer img:hover,.trail-note>img:hover,.portal-plan-visual img:hover,.portal-hero-image img:hover{transform:scale(1.025)}
+.ride-row,.field-offer,.field-vivencia,.portal-offer{transition:transform .35s cubic-bezier(.2,.72,.22,1)}
+.ride-row:hover,.field-offer:hover,.field-vivencia:hover,.portal-offer:hover{transform:translateY(-4px);box-shadow:0 18px 42px #1027191a}
+.location-map{transition:transform .35s cubic-bezier(.2,.72,.22,1)}
+.location-panel:hover .location-map{transform:translateY(-3px)}
+.lightbox:not([hidden]){animation:lightbox-in .28s ease both}
+.lightbox:not([hidden]) img{animation:lightbox-image-in .42s cubic-bezier(.2,.72,.22,1) both}
+@keyframes concept-enter{from{opacity:.4;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes hero-rise{from{opacity:0;transform:translate3d(0,20px,0) scale(.99)}to{opacity:1;transform:translate3d(0,0,0) scale(1)}}
+@keyframes lightbox-in{from{opacity:0}to{opacity:1}}
+@keyframes lightbox-image-in{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){[data-motion="reveal"],[data-motion="reveal"].is-revealed{opacity:1;transform:none;transition:none}.experience.is-entering,.experience.is-entering .trail-copy,.experience.is-entering .trail-art,.experience.is-entering .field-opening>*,.experience.is-entering .field-title,.experience.is-entering .field-photo,.experience.is-entering .portal-hero-copy,.experience.is-entering .portal-hero-image,.lightbox:not([hidden]),.lightbox:not([hidden]) img{animation:none}.ride-row:hover,.field-offer:hover,.field-vivencia:hover,.portal-offer:hover,.concept-button:hover,.button:hover{transform:none}}
+@media(hover:none){.ride-row:hover,.field-offer:hover,.field-vivencia:hover,.portal-offer:hover{transform:none;box-shadow:none}}
+
+

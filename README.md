@@ -29,4 +29,6 @@ As artes foram fornecidas pelo lead. Confirme autorização para o uso das fotos
 
 ## Detalhes técnicos
 
-Não há dependências instaláveis. O layout segue uma abordagem mobile-first e permanece utilizável sem Google Fonts, usando fontes de sistema como fallback. `prefers-reduced-motion` reduz animações para quem prefere movimento reduzido.
+Não há dependências instaláveis. O layout segue uma abordagem mobile-first e permanece utilizável sem Google Fonts, usando fontes de sistema como fallback. As seções entram progressivamente ao rolar e a troca de conceito tem transição própria. O movimento privilegia opacidade e transformações leves; `prefers-reduced-motion` desativa as animações para quem prefere movimento reduzido.
+
+

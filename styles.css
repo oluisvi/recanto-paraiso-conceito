@@ -53,4 +53,3 @@
 @media(prefers-reduced-motion:reduce){[data-motion="reveal"],[data-motion="reveal"].is-revealed{opacity:1;transform:none;transition:none}.experience.is-entering,.experience.is-entering .trail-copy,.experience.is-entering .trail-art,.experience.is-entering .field-opening>*,.experience.is-entering .field-title,.experience.is-entering .field-photo,.experience.is-entering .portal-hero-copy,.experience.is-entering .portal-hero-image,.lightbox:not([hidden]),.lightbox:not([hidden]) img{animation:none}.ride-row:hover,.field-offer:hover,.field-vivencia:hover,.portal-offer:hover,.concept-button:hover,.button:hover{transform:none}}
 @media(hover:none){.ride-row:hover,.field-offer:hover,.field-vivencia:hover,.portal-offer:hover{transform:none;box-shadow:none}}
 
-
